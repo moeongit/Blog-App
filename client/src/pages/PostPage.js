@@ -8,7 +8,7 @@ export default function PostPage(){
     const {userInfo} = useContext(UserContext);
     const {id} = useParams();
     useEffect(() => {
-        fetch(`https://blog-by-moe-e1e62091fb57.herokuapp.com/post/${id}`)
+        fetch(`hhttps://blog-by-moe-d4da04fb7339.herokuapp.com/post/${id}`)
         .then(response => {
             response.json().then(postInfo => {
                 setPostInfo(postInfo);
@@ -35,7 +35,7 @@ export default function PostPage(){
                 </div>
             )}
             <div className="image">
-                <img src={`https://blog-by-moe-e1e62091fb57.herokuapp.com/${postInfo.cover}`} alt=""/>
+                <img src={`https://blog-by-moe-d4da04fb7339.herokuapp.com/${postInfo.cover}`} alt=""/>
             </div>
             <div className="content" dangerouslySetInnerHTML={{__html:postInfo.content}} />
         </div>
