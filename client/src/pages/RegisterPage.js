@@ -5,7 +5,7 @@ export default function RegisterPage(){
     const [password, setPassword] = useState('');
     async function register(ev) {
         ev.preventDefault();
-        const response = await fetch('https://blog-by-moe-d4da04fb7339.herokuapp.com/register', {
+        const response = await fetch('https://blog-app-ashen-theta.vercel.app/register', {
             method: 'POST',
             body: JSON.stringify({username, password}),
             headers: {'Content-Type':'application/json'},

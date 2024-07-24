@@ -6,7 +6,7 @@ export default function Post({ _id, title, summary, cover, content, createdAt, a
     <div className="post">
       <div className="image">
         <Link to={`/post/${_id}`}>
-          <img src={'https://blog-by-moe-d4da04fb7339.herokuapp.com/' + cover} alt="" />
+          <img src={'https://blog-app-ashen-theta.vercel.app/' + cover} alt="" />
         </Link>
       </div>
       <div className="texts">
