@@ -12,7 +12,7 @@ export default function EditPost(){
     const [redirect,setRedirect] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:4000/post/'+id)
+        fetch('https://blog-by-moe-e1e62091fb57.herokuapp.com/post/'+id)
         .then(response => {
             response.json().then(postInfo => {
                 setTitle(postInfo.title);
