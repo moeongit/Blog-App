@@ -140,5 +140,5 @@ app.get('/post/:id', async(req,res) => {
 })
 
 
-app.listen('https://blog-by-moe-e1e62091fb57.herokuapp.com/');
+app.listen(4000);
 
