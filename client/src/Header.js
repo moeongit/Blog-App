@@ -1,65 +1,46 @@
-import { Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { UserContext } from "./UserContext";
-
-const API_URL = process.env.REACT_APP_API_URL;
+import {Link} from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
+import {UserContext} from "./UserContext";
 
 export default function Header() {
-    const { setUserInfo, userInfo } = useContext(UserContext);
+  const {setUserInfo,userInfo} = useContext(UserContext);
+  useEffect(() => {
+    fetch('http://localhost:4000/profile', {
+      credentials: 'include',
+    }).then(response => {
+      response.json().then(userInfo => {
+        setUserInfo(userInfo);
+      });
+    });
+  }, []);
 
-    useEffect(() => {
-        async function fetchUserInfo() {
-            try {
-                const response = await fetch(`${API_URL}/profile`, {
-                    credentials: 'include',
-                });
+  function logout() {
+    fetch('http://localhost:4000/logout', {
+      credentials: 'include',
+      method: 'POST',
+    });
+    setUserInfo(null);
+  }
 
-                if (response.ok) {
-                    const userInfo = await response.json();
-                    setUserInfo(userInfo);
-                } else {
-                    // Handle non-200 responses if needed
-                    setUserInfo(null);
-                }
-            } catch (error) {
-                console.error('Error fetching user info:', error);
-                setUserInfo(null);
-            }
-        }
+  const username = userInfo?.username;
 
-        fetchUserInfo();
-    }, [setUserInfo]);
-
-    async function logout() {
-        try {
-            await fetch(`${API_URL}/logout`, {
-                credentials: 'include',
-                method: 'POST',
-            });
-            setUserInfo(null);
-        } catch (error) {
-            console.error('Error during logout:', error);
-        }
-    }
-
-    const username = userInfo?.username;
-
-    return (
-        <header>
-            <Link to="/" className="logo">MyBlog</Link>
-            <nav>
-                {username ? (
-                    <>
-                        <Link to="/create">Create new post</Link>
-                        <a onClick={logout} style={{ cursor: 'pointer' }}>Logout</a>
-                    </>
-                ) : (
-                    <>
-                        <Link to="/login">Login</Link>
-                        <Link to="/register">Register</Link>
-                    </>
-                )}
-            </nav>
-        </header>
-    );
+  return (
+    <header>
+      <Link to="/" className="logo">MyBlog</Link>
+      <nav>
+        {username && (
+          <>
+            <Link to="/create">Create new post</Link>
+            <a onClick={logout}>Logout ({username})</a>
+          </>
+        )}
+        {!username && (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        )}
+      </nav>
+    </header>
+  );
 }
