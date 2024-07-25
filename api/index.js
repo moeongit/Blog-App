@@ -21,10 +21,14 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 
 
 
-mongoose.connect('mongodb+srv://blog:EspC1s25mqYEKsJm@cluster0.8tvggus.mongodb.net/mydatabase?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('mongodb+srv://admin:jcG4Nse0pRo8BDVR@cluster0.8tvggus.mongodb.net/mydatabase?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   ssl: true
+}).then(() => {
+  console.log('Connected to MongoDB');
+}).catch(err => {
+  console.error('Failed to connect to MongoDB', err);
 });
 
 
@@ -143,4 +147,5 @@ app.get('/post/:id', async (req, res) => {
 
 // app.listen(4000);
 // yes
+//jcG4Nse0pRo8BDVR
 app.listen(process.env.PORT || 4000);
