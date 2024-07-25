@@ -1,20 +1,32 @@
 import Post from "../Post";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
-export default function IndexPage(){
-    const [posts,setPosts] = useState([]);
+const API_URL = process.env.REACT_APP_API_URL;
+
+export default function IndexPage() {
+    const [posts, setPosts] = useState([]);
+
     useEffect(() => {
-        fetch('https://blog-backend-moe-e0b3a3f061a0.herokuapp.com/post').then(response => {
-            response.json().then(posts => {
-                setPosts(posts);
-            });
-        });
+        fetch(`${API_URL}/post`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(posts => setPosts(posts))
+            .catch(error => console.error('Error fetching posts:', error));
     }, []);
+
     return (
         <>
-            {posts.length > 0 && posts.map(post => (
-                <Post {...post}/>
-            ))}
+            {posts.length > 0 ? (
+                posts.map(post => (
+                    <Post key={post._id} {...post} />
+                ))
+            ) : (
+                <p>No posts available.</p>
+            )}
         </>
     );
 }

@@ -1,48 +1,65 @@
-import {Link} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
-import {UserContext} from "./UserContext";
+import { Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { UserContext } from "./UserContext";
 
-export default function Header(){
-    const {setUserInfo,userInfo} = useContext(UserContext);
+const API_URL = process.env.REACT_APP_API_URL;
+
+export default function Header() {
+    const { setUserInfo, userInfo } = useContext(UserContext);
+
     useEffect(() => {
-        fetch('https://blog-backend-moe-e0b3a3f061a0.herokuapp.com/profile', {
-            credentials: 'include',
-        }).then(response => {
-            response.json().then(userInfo => {
-                setUserInfo(userInfo);
-            });
-        });
-    }, []);
+        async function fetchUserInfo() {
+            try {
+                const response = await fetch(`${API_URL}/profile`, {
+                    credentials: 'include',
+                });
 
-    function logout(){
-        fetch('https://blog-backend-moe-e0b3a3f061a0.herokuapp.com/logout', {
-            credentials: 'include',
-            method: 'POST',
-        });
-        setUserInfo(null);
+                if (response.ok) {
+                    const userInfo = await response.json();
+                    setUserInfo(userInfo);
+                } else {
+                    // Handle non-200 responses if needed
+                    setUserInfo(null);
+                }
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+                setUserInfo(null);
+            }
+        }
+
+        fetchUserInfo();
+    }, [setUserInfo]);
+
+    async function logout() {
+        try {
+            await fetch(`${API_URL}/logout`, {
+                credentials: 'include',
+                method: 'POST',
+            });
+            setUserInfo(null);
+        } catch (error) {
+            console.error('Error during logout:', error);
+        }
     }
 
     const username = userInfo?.username;
-
 
     return (
         <header>
             <Link to="/" className="logo">MyBlog</Link>
             <nav>
-                {username && (
-                    <>  
+                {username ? (
+                    <>
                         <Link to="/create">Create new post</Link>
-                        <a onClick={logout}>Logout</a>
+                        <a onClick={logout} style={{ cursor: 'pointer' }}>Logout</a>
                     </>
-                )}
-                {!username && (
+                ) : (
                     <>
                         <Link to="/login">Login</Link>
                         <Link to="/register">Register</Link>
                     </>
                 )}
-                
             </nav>
-      </header>
+        </header>
     );
 }

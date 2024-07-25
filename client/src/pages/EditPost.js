@@ -1,26 +1,27 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import Editor from "../Editor";
 
+const API_URL = process.env.REACT_APP_API_URL;
 
-export default function EditPost(){
-    const {id} = useParams();
-    const[title, setTitle] = useState('');
-    const[summary, setSummary] = useState('');
-    const[content, setContent] = useState('');
-    const [files, setFiles] = useState('');
-    const [redirect,setRedirect] = useState(false);
+export default function EditPost() {
+    const { id } = useParams();
+    const [title, setTitle] = useState('');
+    const [summary, setSummary] = useState('');
+    const [content, setContent] = useState('');
+    const [files, setFiles] = useState(null);
+    const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
-        fetch('https://blog-backend-moe-e0b3a3f061a0.herokuapp.com/'+id)
-        .then(response => {
-            response.json().then(postInfo => {
+        fetch(`${API_URL}/post/${id}`)
+            .then(response => response.json())
+            .then(postInfo => {
                 setTitle(postInfo.title);
                 setContent(postInfo.content);
                 setSummary(postInfo.summary);
-            });
-        });
-    }, []);
+            })
+            .catch(error => console.error('Error fetching post:', error));
+    }, [id]);
 
     async function updatePost(ev) {
         ev.preventDefault();
@@ -29,33 +30,51 @@ export default function EditPost(){
         data.set('summary', summary);
         data.set('content', content);
         data.set('id', id);
-        if (files?.[0]) {
-            data.set('file', files?.[0]);
+        if (files) {
+            data.set('file', files);
         }
-        const response = await fetch('https://blog-backend-moe-e0b3a3f061a0.herokuapp.com/post', {
-            method: 'PUT',
-            body: data,
-            credentials: 'include',
-        });
-        if (response.ok) {
-            setRedirect(true);
+
+        try {
+            const response = await fetch(`${API_URL}/post`, {
+                method: 'PUT',
+                body: data,
+                credentials: 'include',
+            });
+
+            if (response.ok) {
+                setRedirect(true);
+            } else {
+                console.error('Failed to update post:', await response.text());
+            }
+        } catch (error) {
+            console.error('Error updating post:', error);
         }
-        
     }
 
-    if (redirect){
-        return <Navigate to={'/post/'+id} />
+    if (redirect) {
+        return <Navigate to={`/post/${id}`} />;
     }
-
 
     return (
         <form onSubmit={updatePost}>
-            <input type="title" 
-            placeholder={'Title'} value={title} onChange={ev => setTitle(ev.target.value)}/>
-            <input type="summary" placeholder={'Summary'} value={summary} onChange={ev => setSummary(ev.target.value)}/>
-            <input type="file" onChange={ev => setFiles(ev.target.files)}/>
-            <Editor onChange={setContent} value={content} />
-            <button style={{marginTop:'5px'}}>Update Post</button>
+            <input
+                type="text"
+                placeholder="Title"
+                value={title}
+                onChange={ev => setTitle(ev.target.value)}
+            />
+            <input
+                type="text"
+                placeholder="Summary"
+                value={summary}
+                onChange={ev => setSummary(ev.target.value)}
+            />
+            <input
+                type="file"
+                onChange={ev => setFiles(ev.target.files[0])}
+            />
+            <Editor value={content} onChange={setContent} />
+            <button style={{ marginTop: '5px' }}>Update Post</button>
         </form>
     );
 }
