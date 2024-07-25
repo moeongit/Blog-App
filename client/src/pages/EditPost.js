@@ -12,7 +12,7 @@ export default function EditPost(){
     const [redirect,setRedirect] = useState(false);
 
     useEffect(() => {
-        fetch('https://blog-app-backend-one-beige.vercel.app/post/'+id)
+        fetch('https://blog-by-moe-d044d4cae0d7.herokuapp.com/'+id)
         .then(response => {
             response.json().then(postInfo => {
                 setTitle(postInfo.title);
@@ -32,7 +32,7 @@ export default function EditPost(){
         if (files?.[0]) {
             data.set('file', files?.[0]);
         }
-        const response = await fetch('http://localhost:4000/post', {
+        const response = await fetch('https://blog-by-moe-d044d4cae0d7.herokuapp.com/post', {
             method: 'PUT',
             body: data,
             credentials: 'include',

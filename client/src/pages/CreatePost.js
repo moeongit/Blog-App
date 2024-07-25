@@ -5,7 +5,6 @@ import Editor from "../Editor";
 
 
 
-
 export default function CreatePost(){
     const[title, setTitle] = useState('');
     const[summary, setSummary] = useState('');
@@ -20,7 +19,7 @@ export default function CreatePost(){
         data.set('content', content);
         data.set('file', files[0]);
         ev.preventDefault();
-        const response = await fetch('http://localhost:4000/post', {
+        const response = await fetch('https://blog-by-moe-d044d4cae0d7.herokuapp.com/post', {
             method: 'POST',
             body: data,
             credentials: 'include',
