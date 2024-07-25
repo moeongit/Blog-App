@@ -6,7 +6,7 @@ const Post = require('./models/Post')
 const bcrypt = require('bcryptjs');
 const app = express();
 const jwt = require('jsonwebtoken');
-const cookieParser = raequire('cookie-parser');
+const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const uploadMiddleware = multer({ dest: 'uploads/' });
 const fs = require('fs');
@@ -14,7 +14,7 @@ const fs = require('fs');
 const salt = bcrypt.genSaltSync(10);
 const secret = 'asdjasjfkgjkhasgfjhk324234asdjhkguw';
 
-app.use(cors({credentials:true,origin:'http:localhost/3000'}));
+app.use(cors({credentials:true, origin:'https://blog-app-frontend-ftyuqavhe-moeongits-projects.vercel.app'}));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'))
@@ -22,6 +22,7 @@ app.use('/uploads', express.static(__dirname + '/uploads'))
 mongoose.connect('mongodb+srv://blog:54p1wmvWG9vN9NOV@cluster0.8tvggus.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 
 app.post('/register', async (req,res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     const {username, password} = req.body;
     try{
         const userDoc = await User.create({
@@ -57,6 +58,7 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/profile', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     const { token } = req.cookies;
     jwt.verify(token, secret, {}, (err, info) => {
         if (err) {
@@ -70,10 +72,12 @@ app.get('/profile', (req, res) => {
 
 
 app.post('/logout', (req,res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     res.cookie('token', '').json('ok');
 });
 
 app.post('/post', uploadMiddleware.single('file'), async (req,res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     const {originalname,path} = req.file;
     const parts = originalname.split('.');
     const ext = parts[parts.length - 1];
@@ -97,6 +101,7 @@ app.post('/post', uploadMiddleware.single('file'), async (req,res) => {
 });
 
 app.put('/post', uploadMiddleware.single('file'), async (req,res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     let newPath = null; 
     if (req.file){
         const {originalname,path} = req.file;
@@ -129,6 +134,7 @@ app.put('/post', uploadMiddleware.single('file'), async (req,res) => {
 
 
 app.get('/post', async (req,res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(await Post.find()
     .populate('author', ['username'])
     .sort({createdAt: -1})
@@ -137,6 +143,7 @@ app.get('/post', async (req,res) => {
 });
 
 app.get('/post/:id', async(req,res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     const {id} = req.params;
     const postDoc = await Post.findById(id).populate('author', ['username']);
     res.json(postDoc);
