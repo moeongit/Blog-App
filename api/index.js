@@ -58,7 +58,6 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/profile', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     const { token } = req.cookies;
     jwt.verify(token, secret, {}, (err, info) => {
         if (err) {
@@ -72,12 +71,10 @@ app.get('/profile', (req, res) => {
 
 
 app.post('/logout', (req,res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     res.cookie('token', '').json('ok');
 });
 
 app.post('/post', uploadMiddleware.single('file'), async (req,res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     const {originalname,path} = req.file;
     const parts = originalname.split('.');
     const ext = parts[parts.length - 1];
@@ -101,7 +98,6 @@ app.post('/post', uploadMiddleware.single('file'), async (req,res) => {
 });
 
 app.put('/post', uploadMiddleware.single('file'), async (req,res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     let newPath = null; 
     if (req.file){
         const {originalname,path} = req.file;
@@ -134,7 +130,6 @@ app.put('/post', uploadMiddleware.single('file'), async (req,res) => {
 
 
 app.get('/post', async (req,res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     res.json(await Post.find()
     .populate('author', ['username'])
     .sort({createdAt: -1})
@@ -143,7 +138,6 @@ app.get('/post', async (req,res) => {
 });
 
 app.get('/post/:id', async(req,res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     const {id} = req.params;
     const postDoc = await Post.findById(id).populate('author', ['username']);
     res.json(postDoc);
