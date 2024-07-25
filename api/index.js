@@ -56,14 +56,17 @@ app.post('/login', async (req, res) => {
 });
 
 
-app.get('/profile', (req,res) => {
-    const {token} = req.cookies;
-    jwt.verify(token, secret, {}, (err,info) => {
-        if (err) throw err;
-        res.json(info);
+app.get('/profile', (req, res) => {
+    const { token } = req.cookies;
+    jwt.verify(token, secret, {}, (err, info) => {
+        if (err) {
+            res.status(403).json({ error: 'Invalid token' });
+        } else {
+            res.json(info);
+        }
     });
-    res.json(req.cookies);
 });
+
 
 
 app.post('/logout', (req,res) => {
