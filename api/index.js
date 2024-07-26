@@ -32,6 +32,14 @@ mongoose.connect('mongodb+srv://admin:jcG4Nse0pRo8BDVR@cluster0.8tvggus.mongodb.
 });
 
 
+
+app.get('/', (req, res) => {
+  res.send('Hello, world!');
+});
+
+
+
+
 app.post('/register', async (req,res) => {
   const {username,password} = req.body;
   try{
