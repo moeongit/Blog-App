@@ -14,7 +14,7 @@ const fs = require('fs');
 const salt = bcrypt.genSaltSync(10);
 const secret = 'asdjasjfkgjkhasgfjhk324234asdjhkguw';
 
-app.use(cors({credentials:true,origin:'https://blog-app-frontend-lac.vercel.app'}));
+app.use(cors({credentials:true,origin:'http://localhost:3000'}));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
@@ -157,12 +157,12 @@ app.get('/post/:id', async (req, res) => {
 
 
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'client/build')));
 
-// Catch-all handler to serve React's index.html for any route not handled by your API
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
+// // Catch-all handler to serve React's index.html for any route not handled by your API
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+// });
 // app.listen(4000);
 // yes
 //jcG4Nse0pRo8BDVR
