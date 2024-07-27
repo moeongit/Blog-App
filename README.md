@@ -17,6 +17,7 @@ MyBlog is a personal blogging platform where users can create, edit, and delete 
 
 Backend: The backend, built with Node.js, is deployed on Render. Render offers a straightforward deployment process with features like instant previews, automatic SSL, and continuous deployment from GitHub, making it an ideal choice for hosting APIs and backend services.
 
-- ![image](https://github.com/user-attachments/assets/96a345e8-c463-4efa-aedd-f2882371c2d1)
+![image](https://github.com/user-attachments/assets/082bdca6-7519-49f8-8769-54dace4e66ab)
 
-![image](https://github.com/user-attachments/assets/b229993f-7988-4f0b-8d61-a5d5809d420d)
+
+![image](https://github.com/user-attachments/assets/acc8c514-92f2-449d-9c02-cab57450d97f)
