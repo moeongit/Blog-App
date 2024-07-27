@@ -2,11 +2,13 @@ import { formatISO9075 } from "date-fns";
 import { Link } from "react-router-dom";
 
 export default function Post({ _id, title, summary, cover, content, createdAt, author }) {
+  const s3BaseUrl = 'https://blog-images-moe.s3.us-east-2.amazonaws.com/';
+
   return (
     <div className="post">
       <div className="image">
         <Link to={`/post/${_id}`}>
-          <img src={'https://blog-moe-2-4272abcb2420.herokuapp.com/'+cover} alt="" />
+          <img src={`${s3BaseUrl}${cover}`} alt="" />
         </Link>
       </div>
       <div className="texts">
