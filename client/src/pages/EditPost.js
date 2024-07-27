@@ -12,7 +12,7 @@ export default function EditPost(){
     const [redirect,setRedirect] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:4000/'+id)
+        fetch('https://blog-moe-2-4272abcb2420.herokuapp.com/'+id)
         .then(response => {
             response.json().then(postInfo => {
                 setTitle(postInfo.title);
@@ -32,7 +32,7 @@ export default function EditPost(){
         if (files?.[0]) {
             data.set('file', files?.[0]);
         }
-        const response = await fetch('http://localhost:4000/post', {
+        const response = await fetch('https://blog-moe-2-4272abcb2420.herokuapp.com/post', {
             method: 'PUT',
             body: data,
             credentials: 'include',
