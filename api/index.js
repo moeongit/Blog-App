@@ -33,8 +33,6 @@ mongoose.connect('mongodb+srv://admin:jcG4Nse0pRo8BDVR@cluster0.8tvggus.mongodb.
 
 
 
-
-
 app.post('/register', async (req,res) => {
   const {username,password} = req.body;
   try{
@@ -149,7 +147,7 @@ app.get('/post/:id', async (req, res) => {
 })
 
 
-
+//y
 
 // app.use(express.static(path.join(__dirname, 'client/build')));
 
