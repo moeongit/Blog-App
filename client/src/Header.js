@@ -5,7 +5,7 @@ import {UserContext} from "./UserContext";
 export default function Header() {
   const {setUserInfo,userInfo} = useContext(UserContext);
   useEffect(() => {
-    fetch('https://blog-moe-backend-4b7c98d53ec3.herokuapp.com/profile', {
+    fetch('https://blog-app-yj8f.onrender.com/profile', {
       credentials: 'include',
     }).then(response => {
       response.json().then(userInfo => {
@@ -15,7 +15,7 @@ export default function Header() {
   }, []);
 
   function logout() {
-    fetch('https://blog-moe-backend-4b7c98d53ec3.herokuapp.com/logout', {
+    fetch('https://blog-app-yj8f.onrender.com/logout', {
       credentials: 'include',
       method: 'POST',
     });

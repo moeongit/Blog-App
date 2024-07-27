@@ -5,7 +5,7 @@ export default function RegisterPage(){
     const [password, setPassword] = useState('');
     async function register(ev) {
         ev.preventDefault();
-        const response = await fetch('https://blog-moe-backend-4b7c98d53ec3.herokuapp.com/register', {
+        const response = await fetch('https://blog-app-yj8f.onrender.com/register', {
             method: 'POST',
             body: JSON.stringify({username, password}),
             headers: {'Content-Type':'application/json'},
