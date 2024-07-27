@@ -5,7 +5,7 @@ import {UserContext} from "./UserContext";
 export default function Header() {
   const {setUserInfo,userInfo} = useContext(UserContext);
   useEffect(() => {
-    fetch('hhttp://localhost:4000/profile', {
+    fetch('https://blog-moe-backend-4b7c98d53ec3.herokuapp.com/profile', {
       credentials: 'include',
     }).then(response => {
       response.json().then(userInfo => {
