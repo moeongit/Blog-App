@@ -56,6 +56,10 @@ div.post{
   }
 }
 
+#post-cover-image {
+  margin: 0px;
+  margin-bottom: 80px;
+}
 
 div.post div.texts h2{
   margin: 0;
