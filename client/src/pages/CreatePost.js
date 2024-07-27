@@ -19,7 +19,7 @@ export default function CreatePost(){
         data.set('content', content);
         data.set('file', files[0]);
         ev.preventDefault();
-        const response = await fetch('http://localhost:4000/post', {
+        const response = await fetch('https://blog-moe-backend-4b7c98d53ec3.herokuapp.com/post', {
             method: 'POST',
             body: data,
             credentials: 'include',

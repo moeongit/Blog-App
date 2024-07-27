@@ -6,7 +6,7 @@ export default function Post({ _id, title, summary, cover, content, createdAt, a
     <div className="post">
       <div className="image">
         <Link to={`/post/${_id}`}>
-          <img id="post-cover-image" src={'http://localhost:4000/'+cover} alt="" />
+          <img id="post-cover-image" src={'https://blog-moe-backend-4b7c98d53ec3.herokuapp.com/'+cover} alt="" />
         </Link>
       </div>
       <div className="texts">
